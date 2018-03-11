@@ -1,8 +1,10 @@
 package main;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import controllers.Controller;
+import controllers.DashController;
 import databaseConnection.DatabaseHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,12 +23,26 @@ public class App extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.setLogin();
+//		this.setDash();
 			
 	}
 	
 	@Override
+	public void init() {
+		this.dbh = DatabaseHandler.getInstance();
+	}
+	
+	@Override
 	public void stop() {
-		this.dbh.closeConnection();
+		try {
+			this.dbh.closeConnection();
+		} catch (Exception e) {
+			if (e instanceof NullPointerException) {
+				System.out.println("No connection to close");
+			}
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void main(String[] args) {
@@ -34,13 +50,19 @@ public class App extends Application{
 	}
 
 	
-	public void setLogin() {
+	public void setLogin() throws IOException {
+		this.setScene(this.loadScene("/resources/Login.fxml"), "Login");
+	}
+	
+	public void setDash()  {
 		try {
-			this.setScene(this.loadScene("/resources/Login.fxml"), "Login");
+			this.setScene(this.loadScene("/resources/Dash.fxml"), "Dash");
 		} catch (IOException e) {
-			System.out.println("Couldn't load login");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		DashController controller = (DashController) this.currentController;
+//		controller.showØkter();
 	}
 
 	
@@ -67,12 +89,9 @@ public class App extends Application{
     	this.primaryStage.show();
     }
     
-    public DatabaseHandler getDBH() {
-    	return this.dbh;
-    }
 
-	public void setDBH(DatabaseHandler dbh) {
-		this.dbh = dbh;
+	public Controller getCurrentController() {
+		return this.currentController;
 	}
 
 

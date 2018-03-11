@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashController">
+  <tabs>
+    <Tab text="Registrering">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="14.0" layoutY="42.0" prefHeight="96.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="Økt">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="Registrering" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Apparat" toggleGroup="$Registrering" />
+                        <RadioButton mnemonicParsing="false" text="Øvelse" toggleGroup="$Registrering" />
+                     </children>
+                  </VBox>
+                  <TextArea layoutX="347.0" layoutY="23.0" prefHeight="164.0" prefWidth="203.0" wrapText="true" />
+                  <TextField layoutX="183.0" layoutY="23.0" />
+                  <TextField layoutX="184.0" layoutY="113.0" />
+                  <TextField layoutX="184.0" layoutY="65.0" />
+                  <ChoiceBox layoutX="184.0" layoutY="161.0" prefWidth="150.0" />
+                  <ListView layoutX="348.0" layoutY="208.0" prefHeight="153.0" prefWidth="201.0" />
+                  <Text layoutX="397.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Øvelser lagt til i økt" />
+                  <Label layoutX="402.0" layoutY="6.0" text="Beskrivelse/Notat" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Historie">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ToolBar prefHeight="40.0" prefWidth="600.0">
+                    <items>
+                        <TextField prefHeight="25.0" prefWidth="106.0" promptText="Antall siste økter" />
+                      <Button mnemonicParsing="false" text="Bekreft" />
+                        <Label fx:id="queryStatus" alignment="CENTER" prefHeight="24.0" prefWidth="112.0" />
+                    </items>
+                  </ToolBar>
+                  <TextFlow layoutX="186.0" layoutY="40.0" prefHeight="332.0" prefWidth="414.0" />
+                  <TableView fx:id="øktTable" layoutY="40.0" prefHeight="333.0" prefWidth="186.0">
+                    <columns>
+                      <TableColumn fx:id="ØkterList" prefWidth="185.0" text="Økter" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Resultater">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ToolBar prefHeight="40.0" prefWidth="600.0">
+                    <items>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fra" textAlignment="CENTER" wrappingWidth="23.13671875" />
+                        <DatePicker fx:id="Startdato" promptText="Startdato" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Til" textAlignment="CENTER" wrappingWidth="23.099609375" />
+                        <DatePicker fx:id="Sluttdato" promptText="Sluttdato" />
+                      <Button mnemonicParsing="false" onAction="#confirmPressed" text="Bekreft" />
+                    </items>
+                  </ToolBar>
+                  <ListView layoutY="40.0" prefHeight="333.0" prefWidth="200.0" />
+                  <TextFlow layoutX="200.0" layoutY="40.0" prefHeight="332.0" prefWidth="403.0" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Grupper">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>

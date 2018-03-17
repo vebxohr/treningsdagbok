@@ -12,20 +12,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
-      <Label fx:id="statusText" alignment="CENTER" layoutX="202.0" layoutY="294.0" prefHeight="53.0" prefWidth="191.0" textAlignment="CENTER" wrapText="true" />
-      <VBox alignment="TOP_CENTER" layoutX="202.0" layoutY="98.0" prefHeight="202.0" prefWidth="191.0" spacing="30.0">
+      <Label fx:id="statusText" alignment="CENTER" layoutX="205.0" layoutY="294.0" prefHeight="53.0" prefWidth="191.0" textAlignment="CENTER" wrapText="true" />
+      <VBox alignment="CENTER" layoutX="215.0" layoutY="104.0" spacing="30.0">
          <children>
-            <TextField fx:id="dbURL" alignment="CENTER" onKeyReleased="#onKeyReleased" promptText="NTNU DB Name" />
+            <TextField fx:id="dbURL" alignment="CENTER" onKeyReleased="#onKeyReleased" prefHeight="25.0" prefWidth="171.0" promptText="NTNU DB Name" />
             <TextField fx:id="username" alignment="CENTER" onKeyReleased="#onKeyReleased" promptText="DB Username" />
             <PasswordField fx:id="pwd" alignment="CENTER" onKeyReleased="#onKeyReleased" promptText="DB Password" />
             <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#loginPressed" text="Login" />
          </children>
       </VBox>
-      <Text layoutX="257.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOGIN">
+      <Text layoutX="258.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOGIN">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Text>
-      <ProgressIndicator fx:id="connectionProgress" layoutX="277.0" layoutY="354.0" prefHeight="40.0" prefWidth="46.0" />
+      <ProgressIndicator fx:id="connectionProgress" layoutX="278.0" layoutY="347.0" prefHeight="40.0" prefWidth="46.0" />
    </children>
 </AnchorPane>

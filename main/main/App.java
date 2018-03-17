@@ -64,6 +64,15 @@ public class App extends Application{
 //		DashController controller = (DashController) this.currentController;
 //		controller.showØkter();
 	}
+	
+	public void setAddØvelse() {
+		try {
+			this.setScene(this.loadScene("/resources/AddØvelse.fxml"), "Legg til øvelse");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	
     public Parent loadScene(String fxmlFile) throws IOException {
@@ -74,6 +83,7 @@ public class App extends Application{
 		parent = fxmlLoader.load();
 	
     	currentController = fxmlLoader.getController();
+    	System.out.println("Current Controller: " + currentController);
     	currentController.setApp(this);
     		 	
     	return parent;

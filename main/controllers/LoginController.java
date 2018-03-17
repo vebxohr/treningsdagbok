@@ -81,7 +81,7 @@ public class LoginController extends Controller{
 			public void handle(WorkerStateEvent event) {
 				currentApp.setDash();
 				DashController controller = (DashController) currentApp.getCurrentController();
-				controller.showØkter();
+//				controller.showØkter();
 			
 				System.out.println(currentApp.getCurrentController().getClass());
 			}
@@ -174,7 +174,7 @@ public class LoginController extends Controller{
 //	}
 	
 	public void onKeyReleased() {
-		Boolean disablebutton = username.getText().trim().isEmpty() || pwd.getText().trim().isEmpty() || dbURL.getText().trim().isEmpty();
+		Boolean disablebutton = username.getText().trim().isEmpty() || dbURL.getText().trim().isEmpty();
 		
 		loginButton.setDisable(disablebutton);
 	}

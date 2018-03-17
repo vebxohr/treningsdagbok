@@ -23,8 +23,9 @@ public class DatabaseHandler {
 	
 	
 	
-	public void connect(String mysql_NtnuDb_Name, String user, String pwd) throws Exception {
-		this.DB_url = "jdbc:mysql://mysql.stud.ntnu.no/" + mysql_NtnuDb_Name;
+	public void connect(String mysql_database, String user, String pwd) throws Exception {
+		this.DB_url = "jdbc:mysql://" + mysql_database;
+//				mysql.stud.ntnu.no/" + mysql_NtnuDb_Name;
 		this.user = user;
 		this.pwd = pwd;
 		Class.forName(this.JDBC_DRIVER).newInstance();

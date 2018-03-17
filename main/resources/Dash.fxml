@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,18 +9,19 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="725.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashController">
   <tabs>
     <Tab text="Registrering">
       <content>
@@ -46,31 +48,70 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Historie">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <ToolBar prefHeight="40.0" prefWidth="600.0">
-                    <items>
-                        <TextField prefHeight="25.0" prefWidth="106.0" promptText="Antall siste økter" />
-                      <Button mnemonicParsing="false" text="Bekreft" />
-                        <Label fx:id="queryStatus" alignment="CENTER" prefHeight="24.0" prefWidth="112.0" />
-                    </items>
-                  </ToolBar>
-                  <TextFlow layoutX="186.0" layoutY="40.0" prefHeight="332.0" prefWidth="414.0" />
-                  <TableView fx:id="øktTable" layoutY="40.0" prefHeight="333.0" prefWidth="186.0">
-                    <columns>
-                      <TableColumn fx:id="ØkterList" prefWidth="185.0" text="Økter" />
-                    </columns>
-                  </TableView>
-               </children></AnchorPane>
-      </content>
+    <Tab text="Økter">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <left>
+                  <VBox alignment="CENTER" prefHeight="388.0" prefWidth="219.0" style="-fx-border-style: solid none; -fx-border-color: #a5a5a5;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Økt">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <ListView fx:id="økterList" focusTraversable="false" prefHeight="367.0" prefWidth="147.0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
+                     </children>
+                  </VBox>
+               </left>
+               <center>
+                  <VBox alignment="CENTER" prefHeight="389.0" prefWidth="318.0" style="-fx-border-style: solid none; -fx-border-color: #a5a5a5;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Info" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="øktNotat" editable="false" focusTraversable="false" prefHeight="367.0" prefWidth="302.0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" wrapText="true" />
+                     </children>
+                  </VBox>
+               </center>
+               <right>
+                  <VBox alignment="CENTER" prefHeight="372.0" prefWidth="225.0" style="-fx-border-style: solid none; -fx-border-color: #a5a5a5;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Øvelser" textAlignment="CENTER" wrappingWidth="76.13671875">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <ListView fx:id="øvelserIøktList" focusTraversable="false" prefHeight="373.0" prefWidth="263.0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
+                     </children>
+                  </VBox>
+               </right>
+               <top>
+                  <HBox prefHeight="46.0" prefWidth="725.0" spacing="15.0" style="-fx-border-style: none none solid none;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="antallØkter" prefHeight="30.0" prefWidth="109.0" promptText="Antall siste økter" />
+                      <Button fx:id="resultatConfirm" mnemonicParsing="false" onAction="#resultatConfirmPressed" prefHeight="48.0" prefWidth="83.0" text="Bekreft" />
+                        <Button fx:id="addØkt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="102.0" text="Legg til økt" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addØvelse" mnemonicParsing="false" onAction="#addØvelsePressed" prefHeight="30.0" prefWidth="116.0" text="Legg til øvelse" />
+                        <Label fx:id="queryStatus" alignment="CENTER" prefHeight="30.0" prefWidth="228.0" textAlignment="CENTER" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </HBox>
+               </top>
+            </BorderPane>
+         </content>
     </Tab>
       <Tab text="Resultater">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ToolBar prefHeight="40.0" prefWidth="600.0">
+                  <ToolBar prefHeight="40.0" prefWidth="725.0">
                     <items>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fra" textAlignment="CENTER" wrappingWidth="23.13671875" />
                         <DatePicker fx:id="Startdato" promptText="Startdato" />
@@ -79,15 +120,11 @@
                       <Button mnemonicParsing="false" onAction="#confirmPressed" text="Bekreft" />
                     </items>
                   </ToolBar>
-                  <ListView layoutY="40.0" prefHeight="333.0" prefWidth="200.0" />
-                  <TextFlow layoutX="200.0" layoutY="40.0" prefHeight="332.0" prefWidth="403.0" />
+                  <ListView layoutY="40.0" prefHeight="396.0" prefWidth="200.0" />
+                  <TextFlow layoutX="200.0" layoutY="40.0" prefHeight="396.0" prefWidth="525.0" />
                </children></AnchorPane>
         </content>
       </Tab>
-      <Tab text="Grupper">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
+      <Tab text="Grupper" />
   </tabs>
 </TabPane>

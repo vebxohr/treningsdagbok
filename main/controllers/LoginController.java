@@ -82,6 +82,13 @@ public class LoginController extends Controller{
 				currentApp.setDash();
 				DashController controller = (DashController) currentApp.getCurrentController();
 //				controller.showØkter();
+//				controller.showØvelser();
+				try {
+					controller.startup();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			
 				System.out.println(currentApp.getCurrentController().getClass());
 			}

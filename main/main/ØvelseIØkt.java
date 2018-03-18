@@ -17,17 +17,41 @@ import javafx.collections.ObservableList;
 
 public class ØvelseIØkt {
 	
+	private final StringProperty apparatnavn = new SimpleStringProperty(this, "apparatnavn");
+	private final StringProperty beskrivelse = new SimpleStringProperty(this, "beskrivelse");
+	
 	public ØvelseIØkt() {
 		
 	}
 	
-	public ØvelseIØkt(int øktID, String øvelsenavn, int kg, int sett, int reps, Time tidsbruk) {
+	public ØvelseIØkt(int øktID, String øvelsenavn, int kg, int sett, int reps, Time tidsbruk, String apparatnavn, String beskrivelse) {
 		this.setØktID(øktID);
 		this.setØvelsenavn(øvelsenavn);
 		this.setKg(kg);
 		this.setSett(sett);
 		this.setReps(reps);
 		this.setTidsbruk(tidsbruk);
+	}
+	
+
+	public StringProperty apparatnavnProperty() {
+		return apparatnavn;
+	}
+	public final String getApparatnavn() {
+		return apparatnavnProperty().get();
+	}
+	public final void setApparatnavn (String apparatnavn) {
+		apparatnavnProperty().set(apparatnavn);
+	}
+	
+	public StringProperty beskrivelseProperty() {
+		return beskrivelse;
+	}
+	public final String getBeskrivelse() {
+		return beskrivelseProperty().get();
+	}
+	public final void setBeskrivelse (String beskrivelse) {
+		beskrivelseProperty().set(beskrivelse);
 	}
 
 	private final IntegerProperty øktID = new SimpleIntegerProperty(this, "øktID");
@@ -103,11 +127,23 @@ public class ØvelseIØkt {
 		int øktID = this.getØktID();
 		String øvelsenavnString = this.getøvelsenavn();
 		
+//		String beskrivelseString;
+//		if (this.getBeskrivelse().trim().equals(""))
+//			beskrivelseString = "";
+//		else 
+//			beskrivelseString = "\nBeskrivelse: " + this.getBeskrivelse();
+		
 		String kgString;
 		if (this.getKg() == 0)
 			kgString = "";
 		else 
 			kgString = "KG:  " + this.getKg();
+		
+//		String apparatnavnString;
+//		if (this.getApparatnavn().trim().equals(""))
+//			apparatnavnString = "";
+//		else
+//			apparatnavnString = "\nApparat: " + this.getApparatnavn();
 		
 		String settString;
 		if (this.getSett() == 0)
@@ -127,9 +163,9 @@ public class ØvelseIØkt {
 			tidsbrukString = "";
 		}
 		else {
-			tidsbrukString = "Tidsbruk:  " + this.getTidsbruk();
+			tidsbrukString = "\nTidsbruk:  " + this.getTidsbruk();
 		}
-		String finalString = øvelsenavnString + "\n" + kgString + settString + repsString + tidsbrukString;
+		String finalString = øvelsenavnString + "\n" + kgString + settString + repsString  + tidsbrukString;
 		return finalString.trim();
 //		return "hallo";
 	}

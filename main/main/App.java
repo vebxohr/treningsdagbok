@@ -17,6 +17,7 @@ public class App extends Application{
 	private DatabaseHandler dbh;
 	private Stage primaryStage;
 	private Controller currentController;
+	private Stage popupStage;
 	
 	
 	@Override
@@ -25,6 +26,14 @@ public class App extends Application{
 		this.setLogin();
 //		this.setDash();
 			
+	}
+	
+	public Stage getPrimaryStage() {
+		return this.primaryStage;
+	}
+	
+	public Stage getPopupStage() {
+		return this.popupStage;
 	}
 	
 	@Override
@@ -102,6 +111,11 @@ public class App extends Application{
 
 	public Controller getCurrentController() {
 		return this.currentController;
+	}
+
+	public void setPopupStage(Stage popupStage) {
+		this.popupStage = popupStage;
+		
 	}
 
 

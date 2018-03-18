@@ -44,9 +44,13 @@ public class AddØvelseController extends Controller{
 	private TextField tidsbrukText;
 	@FXML
 	private Label dbStatus;
+	@FXML
+	private Button removeØvelseIØktButton;
+	
 	
 	private Øvelse selectedØvelse;
 	private Økt selectedØkt;
+	private ØvelseIØkt selectedØvelseIØkt;
 	
 	@FXML
 	public void initialize() throws SQLException {
@@ -57,6 +61,7 @@ public class AddØvelseController extends Controller{
             public void changed(ObservableValue<? extends Øvelse> observable, Øvelse oldValue, Øvelse newValue) {
                 if(newValue != null) {
                 	addSelectedButton.setDisable(false);
+
         
                     selectedØvelse = øvelseListe.getSelectionModel().getSelectedItem();                 
                 }
@@ -65,6 +70,17 @@ public class AddØvelseController extends Controller{
             }
         });
 		
+		addedØvelseListe.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ØvelseIØkt>() {
+
+			@Override
+			public void changed(ObservableValue<? extends ØvelseIØkt> observable, ØvelseIØkt oldValue,
+					ØvelseIØkt newValue) {
+				if(newValue != null) {
+					selectedØvelseIØkt = addedØvelseListe.getSelectionModel().getSelectedItem();
+					
+				}	
+			}
+		});	
 	}
 	
 	public void startup(Økt økt, ObservableList<Øvelse> øvelser) {
@@ -84,6 +100,8 @@ public class AddØvelseController extends Controller{
 			String settString = settText.getText();
 			String repsString = repsText.getText();
 			String timeString = tidsbrukText.getText();
+			String beskrivelseString = selectedØvelse.getBeskrivelse();
+			String apparatnavnString = selectedØvelse.getApparatnavn();
 			
 			if (kgString.trim().equals("")) 
 				kgString = kgString.trim() + 0;
@@ -106,11 +124,17 @@ public class AddØvelseController extends Controller{
 					int sett = Integer.parseInt(settString);
 					int reps = Integer.parseInt(repsString);
 					Time tidsbruk = Time.valueOf(LocalTime.parse(timeString));
-					ØvelseIØkt øvelseIØkt = new ØvelseIØkt(øktID, øvelsenavn, kg, sett, reps, tidsbruk);
-					qh.addØvelseIØkt(øktID, øvelseIØkt, DatabaseHandler.getInstance());
-					selectedØkt.getØvelseIØkt().add(øvelseIØkt);
-					dbStatus.setTextFill(Color.GREEN);
-					dbStatus.setText("Øvelse lagt til i databasen");
+					ØvelseIØkt øvelseIØkt = new ØvelseIØkt(øktID, øvelsenavn, kg, sett, reps, tidsbruk, apparatnavnString, beskrivelseString);
+					int resultint = qh.addØvelseIØkt(øktID, øvelseIØkt, DatabaseHandler.getInstance());
+					if (resultint == 1) {
+						selectedØkt.getØvelseIØkt().add(øvelseIØkt);
+						dbStatus.setTextFill(Color.GREEN);
+						dbStatus.setText("Øvelse lagt til i databasen");
+					} else {
+						dbStatus.setTextFill(Color.RED);
+						dbStatus.setText("Kunne ikke legge til i DB");
+					}
+					
 				} catch (SQLException e) {
 					dbStatus.setTextFill(Color.RED);
 					dbStatus.setText("Noe gikk galt");
@@ -121,12 +145,29 @@ public class AddØvelseController extends Controller{
 	}
 	
 	public void removeØvelseFromØkt() {
+		ØvelseIØkt øvelse = selectedØvelseIØkt;
+		try {
+			System.out.println(øvelse.getØktID());
+			int resultInt = qh.deleteØvelseIØkt(selectedØkt.getØktID(), øvelse.getøvelsenavn(), DatabaseHandler.getInstance());
+			if (resultInt != 0) {
+				selectedØkt.getØvelseIØkt().remove(øvelse);
+				dbStatus.setTextFill(Color.GREEN);
+				dbStatus.setText("Øvelse slettet fra DB");
+			}
+			else {
+				dbStatus.setTextFill(Color.RED);
+				dbStatus.setText("Noe gikk galt");
+			}
 		
+			
+		} catch (SQLException e) {
+			dbStatus.setTextFill(Color.RED);
+			dbStatus.setText("Noe gikk galt");
+			e.printStackTrace();
+		}
 	}
 	
-	public void addØvelse() {
-		
-	}
+
 	
 	private static Boolean isTime(String timeString) {
 		try {

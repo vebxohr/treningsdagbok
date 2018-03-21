@@ -1,5 +1,6 @@
 package main;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,8 +25,8 @@ public class ØvelseIØkt {
 		
 	}
 	
-	public ØvelseIØkt(int øktID, String øvelsenavn, int kg, int sett, int reps, Time tidsbruk, String apparatnavn, String beskrivelse) {
-		this.setØktID(øktID);
+	public ØvelseIØkt(Date dato, Time starttid, String øvelsenavn, int kg, int sett, int reps, Time tidsbruk, String apparatnavn, String beskrivelse) {
+		
 		this.setØvelsenavn(øvelsenavn);
 		this.setKg(kg);
 		this.setSett(sett);
@@ -124,7 +125,7 @@ public class ØvelseIØkt {
 	
 	@Override
 	public String toString() {
-		int øktID = this.getØktID();
+		
 		String øvelsenavnString = this.getøvelsenavn();
 		
 //		String beskrivelseString;

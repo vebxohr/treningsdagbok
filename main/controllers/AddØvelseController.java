@@ -1,7 +1,9 @@
 package controllers;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import databaseConnection.DatabaseHandler;
@@ -101,7 +103,7 @@ public class AddØvelseController extends Controller{
 			String repsString = repsText.getText();
 			String timeString = tidsbrukText.getText();
 			String beskrivelseString = selectedØvelse.getBeskrivelse();
-			String apparatnavnString = selectedØvelse.getApparatnavn();
+			String apparatnavnString = selectedØvelse.getApparat().getApparatnavn();
 			
 			if (kgString.trim().equals("")) 
 				kgString = kgString.trim() + 0;
@@ -117,15 +119,16 @@ public class AddØvelseController extends Controller{
 			
 			if (DashController.isInteger(kgString) && DashController.isInteger(settString) && DashController.isInteger(repsString) && isTime(timeString)) {
 				try {
-					int øktID = selectedØkt.getØktID();
+					LocalDate dato = selectedØkt.getDato();
+					Time starttid = selectedØkt.getStarttid();
 					String øvelsenavn = selectedØvelse.getØvelsenavn();
 					
 					int kg = Integer.parseInt(kgString);
 					int sett = Integer.parseInt(settString);
 					int reps = Integer.parseInt(repsString);
 					Time tidsbruk = Time.valueOf(LocalTime.parse(timeString));
-					ØvelseIØkt øvelseIØkt = new ØvelseIØkt(øktID, øvelsenavn, kg, sett, reps, tidsbruk, apparatnavnString, beskrivelseString);
-					int resultint = qh.addØvelseIØkt(øktID, øvelseIØkt, DatabaseHandler.getInstance());
+					ØvelseIØkt øvelseIØkt = new ØvelseIØkt(Date.valueOf(dato), starttid, øvelsenavn, kg, sett, reps, tidsbruk, apparatnavnString, beskrivelseString);
+					int resultint = qh.addØvelseIØkt(selectedØkt, øvelseIØkt, DatabaseHandler.getInstance());
 					if (resultint == 1) {
 						selectedØkt.getØvelseIØkt().add(øvelseIØkt);
 						dbStatus.setTextFill(Color.GREEN);
@@ -148,7 +151,7 @@ public class AddØvelseController extends Controller{
 		ØvelseIØkt øvelse = selectedØvelseIØkt;
 		try {
 			System.out.println(øvelse.getØktID());
-			int resultInt = qh.deleteØvelseIØkt(selectedØkt.getØktID(), øvelse.getøvelsenavn(), DatabaseHandler.getInstance());
+			int resultInt = qh.deleteØvelseIØkt(selectedØkt, øvelse.getøvelsenavn(), DatabaseHandler.getInstance());
 			if (resultInt != 0) {
 				selectedØkt.getØvelseIØkt().remove(øvelse);
 				dbStatus.setTextFill(Color.GREEN);

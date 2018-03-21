@@ -25,8 +25,8 @@ public class Økt {
 	
 	
 	
-	public Økt(int øktID, LocalDate dato, Time starttid, Time varighet, int form, int prestasjon, String notat) {
-		this.setØktID(øktID);
+	public Økt(LocalDate dato, Time starttid, Time varighet, int form, int prestasjon, String notat) {
+		
 		this.setDato(dato);
 		this.setStarttid(starttid);
 		this.setVarighet(varighet);
@@ -67,16 +67,16 @@ public class Økt {
 //		øvelseIØktProperty().set(øvelseIØkt);
 //	}
 	
-	private final IntegerProperty øktID = new SimpleIntegerProperty(this, "øktID");
-	public IntegerProperty øktIDProperty() {
-		return øktID;
-	}
-	public final int getØktID() {
-		return øktIDProperty().get();
-	}
-	public final void setØktID(int øktID) {
-		øktIDProperty().set(øktID);
-	}
+//	private final IntegerProperty øktID = new SimpleIntegerProperty(this, "øktID");
+//	public IntegerProperty øktIDProperty() {
+//		return øktID;
+//	}
+//	public final int getØktID() {
+//		return øktIDProperty().get();
+//	}
+//	public final void setØktID(int øktID) {
+//		øktIDProperty().set(øktID);
+//	}
 	
 	private final IntegerProperty form = new SimpleIntegerProperty(this, "form");
 	public IntegerProperty formProperty() {

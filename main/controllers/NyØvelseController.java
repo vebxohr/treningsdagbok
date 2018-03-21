@@ -1,6 +1,8 @@
 package controllers;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import databaseConnection.DatabaseHandler;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -50,9 +53,11 @@ public class NyØvelseController extends Controller {
 	private Gruppe selectedGruppe;
 	
 	private Gruppe removedAlleGrupper;
+	private ObservableList<Gruppe> selectedGrupper;
 	
 	@FXML
 	public void initialize() {
+		gruppeListe.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		selectedApparat = null;
 		selectedGruppe = null;
@@ -74,7 +79,7 @@ public class NyØvelseController extends Controller {
 			public void changed(ObservableValue<? extends Gruppe> observable, Gruppe oldValue, Gruppe newValue) {
 				if (newValue != null) {
 					selectedGruppe = newValue;
-					
+					selectedGrupper = gruppeListe.getSelectionModel().getSelectedItems();
 				}
 				
 			}
@@ -104,6 +109,7 @@ public class NyØvelseController extends Controller {
 			@Override
 			public void handle(WindowEvent event) {
 				dashController.getCurrentGruppe().add(0, removedAlleGrupper);
+				dashController.setAlleØvelserGruppe(removedAlleGrupper);
 				
 			}
 			
@@ -112,33 +118,39 @@ public class NyØvelseController extends Controller {
 	
 
 	public void addØvelsePressed(ActionEvent e) {
-		String apparatnavn;
+		Apparat apparat;
 		if (this.apparatRadio.isSelected() && selectedApparat != null) {
-			apparatnavn = selectedApparat.getApparatnavn();
+			apparat = selectedApparat;
 		} else {
-			apparatnavn = "";
+			apparat = new Apparat();
 		}
 		String øvelsenavn = øvelsenavnText.getText();
 		String beskrivelse = beskrivelseText.getText();
 		
-		Gruppe gruppenavn;
-		if (selectedGruppe != null) {
-			gruppenavn = selectedGruppe;
+		ObservableList<Gruppe> grupper;
+		if (selectedGrupper != null) {
+			grupper= selectedGrupper;
 		} else {
-			queryStatus.setText("Velg gruppe");
+			queryStatus.setText("Velg grupper");
 			e.consume();
 			return;
 		}
 		
-		Øvelse øvelse = new Øvelse(øvelsenavn, gruppenavn, apparatnavn, beskrivelse);
 		
+		Øvelse øvelse = new Øvelse(øvelsenavn, apparat, beskrivelse);
 
 		try {
 			int resultInt = qh.addØvelse(DatabaseHandler.getInstance(), øvelse);
 			if(resultInt != 0) {
-//				dashController.getCurrentØvelseList().add(øvelse);
+				
+				øvelse.setGrupper(grupper);
+				for (Gruppe g: grupper) {
+					g.getØvelser().add(øvelse);
+				}
+//				dashController.getalleØvelserList().add(øvelse);
 //				gruppenavn.getØvelser().add(øvelse);
-				dashController.getCurrentGruppe().get(dashController.getCurrentGruppe().indexOf(gruppenavn)).getØvelser().add(øvelse);
+//				dashController.getCurrentGruppe().get(dashController.getCurrentGruppe().indexOf(gruppenavn)).getØvelser().add(øvelse);
+//				selectedGruppe.getØvelser().add(øvelse);
 				this.removedAlleGrupper.getØvelser().add(øvelse);
 				
 				beskrivelseText.clear();
@@ -160,8 +172,6 @@ public class NyØvelseController extends Controller {
 		
 	}
 	
-	public void apparatChecked() {
-		
-	}
+
 
 }

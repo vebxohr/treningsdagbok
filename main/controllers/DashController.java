@@ -2,44 +2,24 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import databaseConnection.DatabaseHandler;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import main.Gruppe;
 import main.Resultat;
 import main.Økt;
@@ -47,7 +27,6 @@ import main.Øvelse;
 import main.ØvelseIØkt;
 import queryHandler.QueryHandler;
 import utility.Utility;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -56,7 +35,6 @@ import javafx.collections.ObservableList;
 
 public class DashController extends Controller {
 	
-	private Executor exec;
 	
 	@FXML
 	private Button addØvelse;
@@ -112,7 +90,6 @@ public class DashController extends Controller {
 
 	private ObservableList<Øvelse> alleØvelserList;
 	private QueryHandler qh = new QueryHandler();	
-	private Stage popupStage;
 	private Øvelse selectedØvelse;
 	private Gruppe selectedGruppe;
 	private Gruppe alleØvelser;
@@ -200,14 +177,6 @@ public class DashController extends Controller {
 					}	
 				}	
 			}
-		});
-
-		
-		
-		exec = Executors.newCachedThreadPool(runnable -> {
-			Thread t = new Thread (runnable);
-			t.setDaemon(true);
-			return t;
 		});
 	}
 	
@@ -423,7 +392,6 @@ public class DashController extends Controller {
 	
 	public void resultatConfirmPressed() throws SQLException {
 		if (Utility.isInteger(antallØkter.getText())) {
-			String intString = antallØkter.getText();
 			int n = Integer.parseInt(antallØkter.getText());
 			ObservableList<Økt> økter = qh.getØktList(DatabaseHandler.getInstance(), n);
 			økterList.getItems().clear();

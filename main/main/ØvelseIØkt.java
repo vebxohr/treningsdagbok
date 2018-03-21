@@ -2,19 +2,13 @@ package main;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 
 public class ØvelseIØkt {
 	

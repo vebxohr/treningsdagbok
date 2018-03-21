@@ -1,10 +1,7 @@
 package main;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import controllers.Controller;
-import controllers.DashController;
 import databaseConnection.DatabaseHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

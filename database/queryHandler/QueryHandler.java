@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import databaseConnection.DatabaseHandler;
@@ -29,7 +26,8 @@ public class QueryHandler {
 	public void getØvelseResultat(Øvelse øvelse, DatabaseHandler dbh) throws SQLException {
 		String øvelsenavn = øvelse.getØvelsenavn();
 
-		String query = "SELECT DISTINCT form, prestasjon, øvelsenavn, notat, dato FROM ((Øvelse NATURAL JOIN ØvelseIØkt) NATURAL JOIN Økt) WHERE Øvelse.øvelsenavn = ?;";
+		String query = "SELECT DISTINCT form, prestasjon, øvelsenavn, notat, dato FROM ((Øvelse NATURAL JOIN ØvelseIØkt) "
+				+ "NATURAL JOIN Økt) WHERE Øvelse.øvelsenavn = ?;";
 		PreparedStatement statement = dbh.prepareQuery(query);
 		statement.setString(1, øvelsenavn);
 		ResultSet result = statement.executeQuery();
@@ -300,7 +298,8 @@ public class QueryHandler {
 					tidsbruk = Time.valueOf("00:00:00");
 				else 
 					tidsbruk = result2.getTime("tidsbruk");
-				ØvelseIØkt øvelse = new ØvelseIØkt(Date.valueOf(økt.getDato()), økt.getStarttid(), øvelsenavn, kg, sett, reps, tidsbruk, apparatnavn, beskrivelse);
+				ØvelseIØkt øvelse = new ØvelseIØkt(Date.valueOf(økt.getDato()), 
+						økt.getStarttid(), øvelsenavn, kg, sett, reps, tidsbruk, apparatnavn, beskrivelse);
 				
 				øvelseListe.add(øvelse);
 			}

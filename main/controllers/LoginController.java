@@ -1,13 +1,9 @@
 package controllers;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import databaseConnection.DatabaseHandler;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;

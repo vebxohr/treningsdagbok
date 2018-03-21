@@ -20,10 +20,18 @@ import javafx.beans.property.ObjectProperty;
 
 public class Økt {
 	
+	private final ListProperty<ØvelseIØkt> øvelseIØkt = new SimpleListProperty<ØvelseIØkt>(this, "øvelseIØkt");
+	private final IntegerProperty form = new SimpleIntegerProperty(this, "form");
+	private final StringProperty datoStarttid= new SimpleStringProperty(this, "datoStarttid");
+	private final IntegerProperty prestasjon = new SimpleIntegerProperty(this, "prestasjon");
+	private final ObjectProperty<LocalDate> dato = new SimpleObjectProperty<LocalDate>(this, "dato");
+	private final ObjectProperty<Time> starttid = new SimpleObjectProperty<Time>(this, "starttid");
+	private final ObjectProperty<Time> varighet = new SimpleObjectProperty<Time>(this, "varighet");
+	private final StringProperty notat = new SimpleStringProperty(this, "notat");
+	
+
 	public Økt() {
 	}
-	
-	
 	
 	public Økt(LocalDate dato, Time starttid, Time varighet, int form, int prestasjon, String notat) {
 		
@@ -35,17 +43,9 @@ public class Økt {
 		this.setNotat(notat);
 		this.setDatoStarttid(dato.toString() + " " + starttid.toString());
 	}
-//	private List<String> øvelseIØkt;
-//	
-//	public void setØvelseIØkt(List<String> øvelseIØkt) {
-//		this.øvelseIØkt = øvelseIØkt;
-//	}
-//	
-//	public List<String> getØvelseIØkt() {
-//		return this.øvelseIØkt;
-//	}
 	
-	private final ListProperty<ØvelseIØkt> øvelseIØkt = new SimpleListProperty<ØvelseIØkt>(this, "øvelseIØkt");
+	
+
 	public ListProperty<ØvelseIØkt> øvelseIØktProperty() {
 		return øvelseIØkt;
 	}
@@ -55,30 +55,9 @@ public class Økt {
 	public final void setØvelseIØkt(ObservableList<ØvelseIØkt> øvelseIØkt) {
 		øvelseIØktProperty().set(øvelseIØkt);
 	}
+
 	
-//	private final StringProperty øvelseIØkt= new SimpleStringProperty(this, "øvelseIØkt");
-//	public StringProperty øvelseIØktProperty() {
-//		return øvelseIØkt;
-//	}
-//	public final String getØvelseIØkt() {
-//		return øvelseIØktProperty().get();
-//	}
-//	public final void setØvelseIØkt (String øvelseIØkt) {
-//		øvelseIØktProperty().set(øvelseIØkt);
-//	}
 	
-//	private final IntegerProperty øktID = new SimpleIntegerProperty(this, "øktID");
-//	public IntegerProperty øktIDProperty() {
-//		return øktID;
-//	}
-//	public final int getØktID() {
-//		return øktIDProperty().get();
-//	}
-//	public final void setØktID(int øktID) {
-//		øktIDProperty().set(øktID);
-//	}
-	
-	private final IntegerProperty form = new SimpleIntegerProperty(this, "form");
 	public IntegerProperty formProperty() {
 		return form;
 	}
@@ -89,7 +68,7 @@ public class Økt {
 		formProperty().set(form);
 	}
 	
-	private final StringProperty datoStarttid= new SimpleStringProperty(this, "datoStarttid");
+	
 	public StringProperty datoStarttidProperty() {
 		return datoStarttid;
 	}
@@ -99,11 +78,10 @@ public class Økt {
 	public final void setDatoStarttid (String datoStarttid) {
 		datoStarttidProperty().set(datoStarttid);
 	}
+		
 	
 	
 	
-	
-	private final IntegerProperty prestasjon = new SimpleIntegerProperty(this, "prestasjon");
 	public IntegerProperty prestasjonProperty() {
 		return prestasjon;
 	}
@@ -115,7 +93,7 @@ public class Økt {
 	}
 	
 	
-	 private final ObjectProperty<LocalDate> dato = new SimpleObjectProperty<LocalDate>(this, "dato");
+	 
 	 public ObjectProperty<LocalDate> datoProperty() {
 		 return dato ;
 	 }
@@ -127,7 +105,7 @@ public class Økt {
 	 }
 	 
 		
-	 private final ObjectProperty<Time> starttid = new SimpleObjectProperty<Time>(this, "starttid");
+	
 	 public ObjectProperty<Time> starttidProperty() {
 		 return starttid ;
 	 }
@@ -139,7 +117,7 @@ public class Økt {
 	 }
 	 
 	 
-	 private final ObjectProperty<Time> varighet = new SimpleObjectProperty<Time>(this, "varighet");
+	 
 	 public ObjectProperty<Time> varighetProperty() {
 		 return varighet ;
 	 }
@@ -151,7 +129,7 @@ public class Økt {
 	 }
 	 
 	 
-	 private final StringProperty notat = new SimpleStringProperty(this, "notat");
+	 
 	 public StringProperty notatProperty() {
 		 return notat ;
 	 }
@@ -169,12 +147,6 @@ public class Økt {
 		return this.getDatoStarttid();
 	}
 	 
-	 
-	 
-	 
-	
-	
-	
-	
+		
 
 }

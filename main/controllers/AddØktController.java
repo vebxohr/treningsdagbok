@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import main.Økt;
 import main.Øvelse;
 import queryHandler.QueryHandler;
+import utility.Utility;
 
 public class AddØktController extends Controller {
 	
@@ -67,7 +68,7 @@ public class AddØktController extends Controller {
 		int form = 0;
 		int prestasjon = 0;
 		
-		if (!(isTime(timeString) && isTime(varighetString))) {
+		if (!(Utility.isTime(timeString) && Utility.isTime(varighetString))) {
 			queryStatus.setText("Velg gyldig tid");
 			e.consume();
 		} else {
@@ -76,7 +77,7 @@ public class AddØktController extends Controller {
 		}
 			
 		
-		if (!(isInteger(formString) && isInteger(prestasjonString))) {
+		if (!(Utility.isInteger(formString) && Utility.isInteger(prestasjonString))) {
 			queryStatus.setText("Velg heltall for form og prestasjon");
 			e.consume();
 		} else {
@@ -89,8 +90,6 @@ public class AddØktController extends Controller {
 			e.consume();
 		}
 			
-		
-		
 		Økt økt = new Økt(dato, starttid, varighet, form, prestasjon, notat);
 		
 		try {
@@ -111,26 +110,6 @@ public class AddØktController extends Controller {
 		
 	}
 	
-	private static Boolean isTime(String timeString) {
-		try {
-			LocalTime.parse(timeString);
-		} catch (Exception e) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    } catch(NullPointerException e) {
-	        return false;
-	    }
-	    return true;
-	}
 	
 	private boolean isValidInteger(int i) {
 		if (i<=10 && i >= 0)

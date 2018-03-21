@@ -127,24 +127,12 @@ public class ØvelseIØkt {
 	public String toString() {
 		
 		String øvelsenavnString = this.getøvelsenavn();
-		
-//		String beskrivelseString;
-//		if (this.getBeskrivelse().trim().equals(""))
-//			beskrivelseString = "";
-//		else 
-//			beskrivelseString = "\nBeskrivelse: " + this.getBeskrivelse();
-		
+			
 		String kgString;
 		if (this.getKg() == 0)
 			kgString = "";
 		else 
 			kgString = "KG:  " + this.getKg();
-		
-//		String apparatnavnString;
-//		if (this.getApparatnavn().trim().equals(""))
-//			apparatnavnString = "";
-//		else
-//			apparatnavnString = "\nApparat: " + this.getApparatnavn();
 		
 		String settString;
 		if (this.getSett() == 0)
@@ -168,13 +156,12 @@ public class ØvelseIØkt {
 		}
 		String finalString = øvelsenavnString + "\n" + kgString + settString + repsString  + tidsbrukString;
 		return finalString.trim();
-//		return "hallo";
+
 	}
 		
 	
 	public static void main(String[] args) {
-//		ØvelseIØkt øvelse = new ØvelseIØkt(1, "benkpress", 40, 3, 8, "");
-//		System.out.println(øvelse);
+
 		LocalTime time = LocalTime.parse("10:15:30");
 		System.out.println(time);
 	}

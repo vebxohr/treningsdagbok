@@ -21,6 +21,7 @@ import main.Økt;
 import main.Øvelse;
 import main.ØvelseIØkt;
 import queryHandler.QueryHandler;
+import utility.Utility;
 
 public class AddØvelseController extends Controller{
 	
@@ -117,7 +118,7 @@ public class AddØvelseController extends Controller{
 			if (timeString.trim().equals(""))
 				timeString = "00:00:00";
 			
-			if (DashController.isInteger(kgString) && DashController.isInteger(settString) && DashController.isInteger(repsString) && isTime(timeString)) {
+			if (Utility.isInteger(kgString) && Utility.isInteger(settString) && Utility.isInteger(repsString) && Utility.isTime(timeString)) {
 				try {
 					LocalDate dato = selectedØkt.getDato();
 					Time starttid = selectedØkt.getStarttid();
@@ -171,15 +172,5 @@ public class AddØvelseController extends Controller{
 	}
 	
 
-	
-	private static Boolean isTime(String timeString) {
-		try {
-			LocalTime.parse(timeString);
-		} catch (Exception e) {
-			return false;
-		}
-		
-		return true;
-	}
 
 }

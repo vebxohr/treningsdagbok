@@ -46,6 +46,7 @@ import main.Økt;
 import main.Øvelse;
 import main.ØvelseIØkt;
 import queryHandler.QueryHandler;
+import utility.Utility;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -110,18 +111,9 @@ public class DashController extends Controller {
 	private TextArea apparatInstruksjonText;
 
 	private ObservableList<Øvelse> alleØvelserList;
-	
-//	private ObservableList<Gruppe> currentGruppeList;
-	
-	private QueryHandler qh = new QueryHandler();
-	
-	private Service<Void> dbThread;
-	
-	
+	private QueryHandler qh = new QueryHandler();	
 	private Stage popupStage;
-	
 	private Øvelse selectedØvelse;
-	private Øvelse selectedØvelseResultater;
 	private Gruppe selectedGruppe;
 	private Gruppe alleØvelser;
 	private Økt selectedØkt;
@@ -188,10 +180,10 @@ public class DashController extends Controller {
 			@Override
 			public void changed(ObservableValue<? extends Øvelse> observable, Øvelse oldValue, Øvelse newValue) {
 				if (newValue != null) {
+					øvelseResultaterList.setItems(FXCollections.observableArrayList());
 					if (!(Startdato.getValue() == null || Sluttdato.getValue() == null)) {
 						resultatQueryStatus.setText("");
 						Øvelse øvelse = resultatØvelseListe.getSelectionModel().getSelectedItem();
-						selectedØvelseResultater = øvelse;
 						ObservableList<Resultat> øvelseresultat = øvelse.getResultater();
 						List<Resultat> gyldigeResultat = new ArrayList<Resultat> ();
 						for (Resultat r: øvelseresultat) {
@@ -205,10 +197,8 @@ public class DashController extends Controller {
 						øvelseResultaterList.setItems(finalResultater);
 					} else {
 						resultatQueryStatus.setText("Velg en dato");
-					}
-						
-				}
-				
+					}	
+				}	
 			}
 		});
 
@@ -226,14 +216,7 @@ public class DashController extends Controller {
 	}
 	
 	public void addØkt() throws IOException {
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/AddØkt.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
+		this.getApp().showPopupStage("/resources/AddØkt.fxml");
 		
 		AddØktController controller = (AddØktController) this.getApp().getCurrentController();
 		controller.startUp(this);
@@ -257,8 +240,6 @@ public class DashController extends Controller {
 			try {
 				int resultint = qh.deleteØvelse(DatabaseHandler.getInstance(), selectedØvelse);
 				if (resultint != 0) {
-//					if (selectedGruppe != alleØvelser)
-//						alleØvelser.getØvelser().remove(valgtØvelse);
 					ObservableList<Øvelse> alleøvelsergruppeliste= alleØvelser.getØvelser();
 					if (isInAlleØvelserListe(alleøvelsergruppeliste) != null)
 						alleØvelser.getØvelser().remove(isInAlleØvelserListe(alleøvelsergruppeliste));
@@ -273,18 +254,7 @@ public class DashController extends Controller {
 							if (ø.getØvelsenavn().equals(valgtØvelseNavn))
 								g.getØvelser().remove(ø);
 						}
-					}
-//					for (Gruppe g: gruppeliste) {
-//						ObservableList<Øvelse> øvelser = g.getØvelser();
-//						for(Øvelse ø: øvelser) {
-//							if (ø.getØvelsenavn().equals(valgtØvelseNavn))
-//								g.getØvelser().remove(ø);
-//						}
-//						
-//					}
-//					valgtØvelse.getGruppenavn().getØvelser().remove(valgtØvelse);
-//					alleØvelser.getØvelser().remove(valgtØvelse);
-					
+					}			
 					
 					øvelseQueryStatus.setTextFill(Color.GREEN);
 					øvelseQueryStatus.setText("Øvelse slettet fra DB");
@@ -315,15 +285,7 @@ public class DashController extends Controller {
 	
 	
 	public void addGruppe() throws IOException {
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/NyGruppe.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
-		
+		this.getApp().showPopupStage("/resources/NyGruppe.fxml");
 		nyGruppeController controller = (nyGruppeController) this.getApp().getCurrentController();
 		controller.startUp(this);
 	}
@@ -343,58 +305,21 @@ public class DashController extends Controller {
 			alert.setContentText("Trykk OK for å bekrefte eller Cancel for å gå tilbake");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-			try {
-				int resultInt = qh.deleteGruppe(DatabaseHandler.getInstance(), selectedGruppe);
-				if (resultInt != 0) {
-//					for (Øvelse ø : selectedGruppe.getØvelser()) {
-//						if (alleØvelser.getØvelser().contains(ø))
-//							alleØvelser.getØvelser().remove(ø);
-//					}
-//					for (int i = 0; i < valgtGruppe.getØvelser().size(); i++) {
-//						Øvelse ø = valgtGruppe.getØvelser().get(i);
-//						for (int s = 0; s < alleGrupperListe.size(); s++) {
-//							Gruppe g = alleGrupperListe.get(s);
-//							if (g.getØvelser().contains(ø))
-//								g.getØvelser().remove(ø);
-//						}
-//					}
-//					for (Øvelse ø : valgtGruppe.getØvelser()) {
-//						for (Gruppe g: alleGrupperListe) {
-//							if (g.getØvelser().contains(ø))
-//								g.getØvelser().remove(ø);
-//						}
-//					}
-//					for (Gruppe g: alleGrupperListe) {
-//						for (Øvelse ø)
-//						if (g.getØvelser().cont)
-//					}
-					gruppeListe.getItems().remove(selectedGruppe);
-					
-					
-//					for (Øvelse ø1 : alleØvelser.getØvelser()) {
-//						for (Øvelse ø : selectedGruppe.getØvelser()) {
-//							if ()
-//							if (ø1.equals(ø)) {
-//								alleØvelser.getØvelser().remove(ø1);
-//								break;
-//							}
-//								
-//							
-//						}
-//					}
-//					
-//					currentGruppeList.remove(selectedGruppe);
-					øvelseQueryStatus.setTextFill(Color.GREEN);
-					øvelseQueryStatus.setText("Gruppe fjernet fra DB");
-				} else {
+				try {
+					int resultInt = qh.deleteGruppe(DatabaseHandler.getInstance(), selectedGruppe);
+					if (resultInt != 0) {
+						gruppeListe.getItems().remove(selectedGruppe);
+						øvelseQueryStatus.setTextFill(Color.GREEN);
+						øvelseQueryStatus.setText("Gruppe fjernet fra DB");
+					} else {
+						øvelseQueryStatus.setTextFill(Color.RED);
+						øvelseQueryStatus.setText("Kunne ikke fjerne gruppe fra DB");
+					}
+				} catch (SQLException e) {
 					øvelseQueryStatus.setTextFill(Color.RED);
 					øvelseQueryStatus.setText("Kunne ikke fjerne gruppe fra DB");
-				}
-			} catch (SQLException e) {
-				øvelseQueryStatus.setTextFill(Color.RED);
-				øvelseQueryStatus.setText("Kunne ikke fjerne gruppe fra DB");
-				e.printStackTrace();
-				}
+					e.printStackTrace();
+					}
 			} else
 				event.consume();
 		}
@@ -403,19 +328,10 @@ public class DashController extends Controller {
 	
 	public void startup() {
 
-
 		try {
 			alleØvelserList = qh.getAllØvelser(DatabaseHandler.getInstance());
-//			FXCollections.observableArrayList();
 			ObservableList<Gruppe> grupper;
 			grupper = qh.getGrupper(DatabaseHandler.getInstance());
-//			for (Gruppe g : grupper) {
-//				ObservableList<Øvelse> gruppeØvelser = g.getØvelser();
-//				for (Øvelse ø: gruppeØvelser) {
-//					if (!alleØvelserList.contains(ø))
-//						alleØvelserList.add(ø);
-//				}
-//			}
 			alleØvelser = new Gruppe("Alle øvelser");
 			alleØvelser.setØvelser(alleØvelserList);
 			grupper.add(0, alleØvelser);
@@ -463,10 +379,8 @@ public class DashController extends Controller {
 				}
 			} else {
 				e.consume();
-			}
-			
-		}
-		
+			}	
+		}	
 	}
 	
 	public ObservableList<Gruppe> getCurrentGruppe(){
@@ -475,29 +389,15 @@ public class DashController extends Controller {
 	public ObservableList<Øvelse> getalleØvelserList(){
 		return this.alleØvelserList;
 	}
-	
-	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    } catch(NullPointerException e) {
-	        return false;
-	    }
-	    return true;
-	}
-
-	
+		
 	public void showØvelser() {
 		 ObservableList<Øvelse> øvelser;
 		try {
 			øvelser = qh.getAllØvelser(DatabaseHandler.getInstance());
 			øvelseListe.setItems(øvelser);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		 
+		}		 
 	}
 	
 
@@ -507,32 +407,14 @@ public class DashController extends Controller {
 		Økt økt = økterList.getSelectionModel().getSelectedItem();
 		
 		ObservableList<Øvelse> øvelser = qh.getAllØvelser(DatabaseHandler.getInstance());
-		
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/AddØvelse.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
 	
-		
+		this.getApp().showPopupStage("/resources/AddØvelse.fxml");
 		AddØvelseController controller = (AddØvelseController)this.getApp().getCurrentController();
-		
-		System.out.println(controller);
 		controller.startup(økt, øvelser);
 	}
 	
 	public void nyØvelsePressed() throws IOException {
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/NyØvelse.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
+		this.getApp().showPopupStage("/resources/NyØvelse.fxml");
 		
 		NyØvelseController controller = (NyØvelseController) this.getApp().getCurrentController();
 		controller.startup(this);
@@ -540,49 +422,29 @@ public class DashController extends Controller {
 	
 	
 	public void resultatConfirmPressed() throws SQLException {
-		if (isInteger(antallØkter.getText())) {
+		if (Utility.isInteger(antallØkter.getText())) {
 			String intString = antallØkter.getText();
-			System.out.println(intString);
 			int n = Integer.parseInt(antallØkter.getText());
-			System.out.println(n);
 			ObservableList<Økt> økter = qh.getØktList(DatabaseHandler.getInstance(), n);
 			økterList.getItems().clear();
 			økterList.setItems(økter);
 		}		
 	}
 	
-	public void confirmPressed() {
-		LocalDate startDate = Startdato.getValue();
-		LocalDate endDate = Sluttdato.getValue();
-	}
-	
+
 	public void endreGruppePressed() throws IOException {
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/EndreGruppe.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
+		this.getApp().showPopupStage("/resources/EndreGruppe.fxml");
 		
 		EndreGruppeController controller = (EndreGruppeController) this.getApp().getCurrentController();
 		controller.startup(this, selectedGruppe);
 	}
 	
 	public void addApparatPressed() throws IOException {
-		popupStage = new Stage();
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(this.getApp().getPrimaryStage());
-		Parent parent = this.getApp().loadScene("/resources/NyttApparat.fxml");
-		Scene scene = new Scene(parent);
-		popupStage.setScene(scene);
-		popupStage.show();
-		this.getApp().setPopupStage(popupStage);
-		
+		this.getApp().showPopupStage("/resources/NyttApparat.fxml");
 		
 	}
 	
+
 	
 
 }

@@ -63,7 +63,6 @@ public class LoginController extends Controller{
 		App currentApp = this.getApp();
 		connectionProgress.setVisible(true);
 		
-//		Oppgave som skal kjøres på bakgrunnstråden
 		Task<Void> dbLogin = new Task<Void>() {
 			
 			@Override
@@ -81,8 +80,6 @@ public class LoginController extends Controller{
 			public void handle(WorkerStateEvent event) {
 				currentApp.setDash();
 				DashController controller = (DashController) currentApp.getCurrentController();
-//				controller.showØkter();
-//				controller.showØvelser();
 				controller.startup();
 				System.out.println(currentApp.getCurrentController().getClass());
 			}
@@ -93,9 +90,7 @@ public class LoginController extends Controller{
 
 			@Override
 			public void handle(WorkerStateEvent event) {
-				statusText.setText("Couldn't connect");
-//				loginButton.setDisable(false);
-			
+				statusText.setText("Couldn't connect");			
 				
 			}
 			
@@ -115,64 +110,9 @@ public class LoginController extends Controller{
 			
 		});
 		
-//		Kjører oppgaven på en ny tråd
 		exec.execute(dbLogin);
-//		setupDBconnection();
-//		Task<Boolean> dbTask = new Task<Boolean>() {
-//
-//			@Override
-//			protected Boolean call() throws Exception {
-//				setupDBconnection();
-//				if (DatabaseHandler.getInstance().isConnected())
-//					return true;
-//				else 
-//					return false;
-//			}
-//			
-//		};
-//		
-//		dbTask.setOnSucceeded(e -> {
-//			try {
-//				Boolean bool = dbTask.get();
-//				if (bool != null && bool == true) {
-//					this.getApp().setDash();
-////					DashController controller = (DashController) this.getApp().getCurrentController();
-////					controller.showØkter();
-//				}
-//			} catch (InterruptedException | ExecutionException | IOException | SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		});
-//		exec.execute(dbTask);
-//		
-//		
-		
 	}
 	
-//	private void setupDBconnection() {
-//		DatabaseHandler dbh = DatabaseHandler.getInstance();
-//		try {
-//			if (dbh.isConnected()) {
-//				statusText.setText("");
-//				
-//			}	
-//			else {
-//				dbh.connect(dbURL.getText(), username.getText(), pwd.getText());
-//			}
-//		} catch (Exception e) {
-//			statusText.setText("Something went wrong");
-//			e.printStackTrace();
-//		}
-//		if (dbh.isConnected())
-//			try {
-//				this.getApp().setDash();
-//			} catch (IOException | SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//	}
 	
 	public void onKeyReleased() {
 		Boolean disablebutton = username.getText().trim().isEmpty() || dbURL.getText().trim().isEmpty();

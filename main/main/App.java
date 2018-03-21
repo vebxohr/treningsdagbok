@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class App extends Application{
@@ -117,6 +118,18 @@ public class App extends Application{
 		this.popupStage = popupStage;
 		
 	}
+	
+	public void showPopupStage(String fxmlfileName) throws IOException {
+		popupStage = new Stage();
+		popupStage.initModality(Modality.APPLICATION_MODAL);
+		popupStage.initOwner(getPrimaryStage());
+		Parent parent = loadScene(fxmlfileName);
+		Scene scene = new Scene(parent);
+		popupStage.setScene(scene);
+		popupStage.show();
+		setPopupStage(popupStage);
+	}
+	
 
 
 	

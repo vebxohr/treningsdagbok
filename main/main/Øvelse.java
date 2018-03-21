@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 public class Øvelse {
 	
 	private final StringProperty øvelsenavn= new SimpleStringProperty(this, "øvelsenavn");
-	private final ObjectProperty<Gruppe> gruppenavn= new SimpleObjectProperty<Gruppe>(this, "gruppenavn");
 	private final ObjectProperty<Apparat> apparat = new SimpleObjectProperty<Apparat>(this, "apparatnavn");
 	private final StringProperty beskrivelse = new SimpleStringProperty(this, "apparatnavn");
 	private final ListProperty<Resultat> resultater = new SimpleListProperty<Resultat>(this, "resultater");
@@ -80,16 +79,6 @@ public class Øvelse {
 		beskrivelseProperty().set(beskrivelse);
 	}
 	
-
-//	public ObjectProperty<Gruppe> gruppenavnProperty() {
-//		return gruppenavn;
-//	}
-//	public final Gruppe getGruppenavn() {
-//		return gruppenavnProperty().get();
-//	}
-//	public final void setGruppenavn (Gruppe gruppenavn) {
-//		gruppenavnProperty().set(gruppenavn);
-//	}
 	
 	private String øvelseNavnFormat(String string) {
 		return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();
@@ -118,10 +107,6 @@ public class Øvelse {
 	
 	@Override
 	public String toString() {
-
-		
-		
-		
 		return øvelseNavnFormat(this.getØvelsenavn());
 	}
 

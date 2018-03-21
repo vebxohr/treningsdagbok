@@ -47,7 +47,6 @@ public class EndreGruppeController extends Controller{
 		
 		selectedGruppe = gruppe;
 		ObservableList<Øvelse> alleØvelser = FXCollections.observableArrayList(controller.getalleØvelserList());
-		
 		ObservableList<Øvelse> øvelserIgruppe = gruppe.getØvelser();
 		alleØvelser.removeAll(øvelserIgruppe);
 		valgtGruppeLabel.setText("Gruppe: " + gruppe.getGruppenavn());
@@ -68,7 +67,6 @@ public class EndreGruppeController extends Controller{
 				queryStatus.setText("Kunne ikke legge til øvelser i gruppen");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

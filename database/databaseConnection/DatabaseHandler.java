@@ -25,7 +25,6 @@ public class DatabaseHandler {
 	
 	public void connect(String mysql_database, String user, String pwd) throws Exception {
 		this.DB_url = "jdbc:mysql://" + mysql_database;
-//				mysql.stud.ntnu.no/" + mysql_NtnuDb_Name;
 		this.user = user;
 		this.pwd = pwd;
 		Class.forName(this.JDBC_DRIVER).newInstance();
@@ -55,20 +54,5 @@ public class DatabaseHandler {
 		return this.connection.prepareStatement(query);
 	}
 	
-	
-
-	
-	
-	
-	public static void main(String[] args) throws Exception {
-		DatabaseHandler dbcon = DatabaseHandler.getInstance();
-		dbcon.connect("vebjoroh_Treningsdagbok", "vebjoroh", "abecederisk");
-		System.out.println(dbcon.isConnected());
-	
-		dbcon.closeConnection();
-		
-		System.out.println(dbcon.isConnected());
-		
-	}
 
 }

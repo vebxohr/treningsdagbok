@@ -100,8 +100,6 @@ public class QueryHandler {
 	
 	public ObservableList<Gruppe> getGrupper(DatabaseHandler dbh) throws SQLException{
 		String query = "SELECT * FROM Gruppe;";
-//		String query2 = "SELECT Gruppe.gruppenavn, Øvelse.øvelsenavn, apparatnavn, beskrivelse FROM Gruppe join Øvelse on Gruppe.gruppenavn = "
-//				+ "Øvelse.gruppenavn WHERE Gruppe.gruppenavn = ?;";
 		String query2 = "SELECT Gruppe.gruppenavn, Øvelse.øvelsenavn, Apparat.apparatnavn, beskrivelse, instruksjoner FROM  "
 				+ "((Gruppe join ØvelseIGruppe on Gruppe.gruppenavn = ØvelseIGruppe.gruppenavn) "
 				+ "join Øvelse on Øvelse.øvelsenavn = ØvelseIGruppe.øvelsenavn) LEFT JOIN Apparat ON Apparat.apparatnavn = Øvelse.apparatnavn"
@@ -144,10 +142,6 @@ public class QueryHandler {
 				
 				øvelseListe.add(øvelse);
 			}
-
-//			if (øvelseListe != null)
-//				g.setØvelser(FXCollections.observableArrayList(øvelseListe));	
-		
 		}
 		
 		for (Øvelse ø : øvelseListe) {
@@ -255,7 +249,6 @@ public class QueryHandler {
 		return statement.executeUpdate();
 	}
 	
-//	test for endringer
 	public ObservableList<Økt> getØktList(DatabaseHandler dbh, int n) throws SQLException {
 		String query = "SELECT * FROM Økt ORDER BY dato desc, starttid desc LIMIT ?;";
 		String query2 = "SELECT Øvelse.øvelsenavn, kg, sett, reps, tidsbruk, apparatnavn, "
@@ -264,8 +257,6 @@ public class QueryHandler {
 		PreparedStatement statement = dbh.prepareQuery(query);
 		statement.setInt(1, n);
 		ResultSet result = statement.executeQuery();
-		
-//		ObservableList<ØvelseIØkt> øvelseListe = FXCollections.observableArrayList();
 		
 		List<Økt> øktList = new ArrayList<>();
 		while (result.next()) {
@@ -280,10 +271,6 @@ public class QueryHandler {
 			String notat = result.getString("notat").toString();
 			Økt økt = new Økt(dato, starttid, varighet, form, prestasjon, notat);
 			øktList.add(økt);
-			
-//			øvelseListe = this.getØvelseIØktList(dbh, øktID);
-//			økt.setØvelseIØkt(getØvelseIØktList(dbh, øktID));
-
 			
 		}
 		List<ØvelseIØkt> øvelseListe;
@@ -313,16 +300,12 @@ public class QueryHandler {
 					tidsbruk = Time.valueOf("00:00:00");
 				else 
 					tidsbruk = result2.getTime("tidsbruk");
-//				String øvelse = øvelsenavn;
 				ØvelseIØkt øvelse = new ØvelseIØkt(Date.valueOf(økt.getDato()), økt.getStarttid(), øvelsenavn, kg, sett, reps, tidsbruk, apparatnavn, beskrivelse);
 				
 				øvelseListe.add(øvelse);
 			}
-//			System.out.println(øvelseListe+ "SADFDSFASDF") ;
-			økt.setØvelseIØkt(FXCollections.observableArrayList(øvelseListe));
-//			økt.setØvelseIØkt(øvelseListe);
-			
-			
+
+			økt.setØvelseIØkt(FXCollections.observableArrayList(øvelseListe));		
 		}
 		return FXCollections.observableArrayList(øktList);
 	}

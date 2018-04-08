@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddØvelseController">
+   <left>
+      <VBox prefHeight="433.0" prefWidth="225.0" style="-fx-border-style: solid; -fx-border-color: #a5a5a5; -fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="61.0" prefWidth="223.0" style="-fx-border-style: none none none solid;" text="Alle Øvelser" textAlignment="CENTER" />
+            <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="209.0" spacing="15.0" style="-fx-border-style: solid none;">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+               <children>
+                <Button fx:id="addSelectedButton" mnemonicParsing="false" onAction="#addSelectedØvelse" prefHeight="25.0" prefWidth="103.0" text="Legg til i økt" />
+               </children>
+            </HBox>
+            <ListView fx:id="øvelseListe" prefHeight="377.0" prefWidth="223.0" />
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="443.0" prefWidth="225.0" style="-fx-border-style: solid; -fx-border-color: #a5a5a5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="48.0" prefWidth="223.0" style="-fx-background-color: white;" text="Øvelser i valgt økt" />
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="223.0" spacing="15.0" style="-fx-border-style: solid none; -fx-background-color: white;">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+               <children>
+                  <Button fx:id="removeØvelseIØktButton" mnemonicParsing="false" onAction="#removeØvelseFromØkt" prefHeight="25.0" prefWidth="103.0" text="Fjern valgt" />
+               </children>
+            </HBox>
+            <ListView fx:id="addedØvelseListe" prefHeight="363.0" prefWidth="223.0" style="-fx-background-color: white;" />
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="363.0" prefWidth="156.0" style="-fx-border-color: #a5a5a5; -fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="selectedØktNavn" alignment="CENTER" prefHeight="42.0" prefWidth="166.0" text="Legg til valgt øvelse i økt" />
+            <HBox prefHeight="32.0" prefWidth="170.0" style="-fx-border-style: solid none;">
+               <children>
+                  <Label prefHeight="31.0" prefWidth="168.0" />
+               </children>
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </HBox>
+            <TextField fx:id="kgText" promptText="Kg (heltall)" />
+            <Label />
+            <TextField fx:id="settText" promptText="Sett" />
+            <Label />
+            <TextField fx:id="repsText" promptText="Repitisjoner" />
+            <Label />
+            <TextField fx:id="tidsbrukText" promptText="Tidsbruk (HH:MM:SS)" />
+            <Label />
+            <Label fx:id="dbStatus" contentDisplay="CENTER" prefHeight="106.0" prefWidth="144.0" textAlignment="CENTER" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

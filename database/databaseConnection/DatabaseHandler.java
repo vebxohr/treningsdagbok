@@ -24,7 +24,7 @@ public class DatabaseHandler {
 	
 	
 	public void connect(String mysql_database, String user, String pwd) throws Exception {
-		this.DB_url = "jdbc:mysql://" + mysql_database;
+		this.DB_url = "jdbc:mysql://" + mysql_database +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		this.user = user;
 		this.pwd = pwd;
 		Class.forName(this.JDBC_DRIVER).newInstance();

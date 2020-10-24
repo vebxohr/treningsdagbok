@@ -86,8 +86,8 @@ public class LoginController extends Controller{
 
 			@Override
 			public void handle(WorkerStateEvent event) {
-				statusText.setText("Couldn't connect");			
-				
+				statusText.setText("Couldn't connect");
+				System.out.println(dbLogin.getException().toString());
 			}
 			
 		});

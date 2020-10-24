@@ -1,0 +1,46 @@
+create table Økt(dato date, starttid time, varighet time, form int, prestasjon int, notat varchar(300),
+
+primary key(dato, starttid));
+
+
+
+create table Apparat(apparatnavn varchar(50) character set latin1 collate latin1_danish_ci unique not null, instruksjoner varchar(2000) character set latin1 collate latin1_danish_ci default "",
+
+primary key(apparatnavn));
+
+
+
+create table Gruppe(gruppenavn varchar(50) character set latin1 collate latin1_danish_ci unique not null,
+
+primary key(gruppenavn));
+
+
+
+create table Øvelse(øvelsenavn varchar(50) character set latin1 collate latin1_danish_ci unique not null, beskrivelse varcharacter(2000) default "", apparatnavn varchar(50) character set latin1 collate latin1_danish_ci default null,
+
+primary key(øvelsenavn),
+
+foreign key(apparatnavn) references Apparat(apparatnavn) on delete set null on update cascade);
+
+
+
+
+create table ØvelseIGruppe(gruppenavn varchar(50) character set latin1 collate latin1_danish_ci not null, øvelsenavn varchar(50) character set latin1 collate latin1_danish_ci not null,
+
+foreign key(gruppenavn) references Gruppe(gruppenavn) on update cascade on delete cascade,
+
+foreign key (øvelsenavn) references Øvelse(øvelsenavn) on update cascade on delete cascade,
+
+constraint gruppeøvelseuq unique(gruppenavn, øvelsenavn));
+
+
+
+create table ØvelseIØkt(dato date, starttid time , øvelsenavn varchar(50) character set latin1 collate latin1_danish_ci not null, kg int default 0, sett int unsigned default 0, reps int unsigned default 0, tidsbruk time default null,
+
+primary key(dato, starttid, øvelsenavn, kg, sett, reps),
+
+foreign key(dato, starttid) references Økt(dato, starttid) on delete cascade on update cascade,
+
+foreign key(øvelsenavn) references Øvelse(øvelsenavn) on delete cascade on update cascade);
+
+
